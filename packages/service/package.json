@@ -1,0 +1,35 @@
+{
+  "name": "@growinco/service",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/prisma.ts",
+  "exports": {
+    ".": "./src/prisma.ts",
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "build": "prisma generate",
+    "lint": "eslint",
+    "studio": "prisma studio"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "18.15.11",
+    "eslint": "8.38.0",
+    "ts-node": "^9.1.1",
+    "typescript": "5.0.4",
+    "prisma": "^4.13.0"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": false,
+    "printWidth": 110
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "growinco",
+  "workspaces": [
+    "packages/*"
+  ]
+}

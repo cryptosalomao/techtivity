@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGO_URL")
+}
+
+model Organization {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  website   String?
+  createdAt DateTime @default(now()) @db.Date
+
+  companies Company[]
+}
+
+model Company {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  organizationId String   @db.ObjectId
+  countryIds     String[]
+  createdAt      DateTime @default(now()) @db.Date
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+  projects     Project[]
+}
+
+model Project {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  companyId String   @db.ObjectId
+  createdAt DateTime @default(now()) @db.Date
+
+  company Company @relation(fields: [companyId], references: [id])
+}
+
+model GlobalRegion {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  createdAt DateTime @default(now()) @db.Date
+
+  countries Country[]
+}
+
+model Country {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  globalRegionId String   @db.ObjectId
+  name           String
+  createdAt      DateTime @default(now()) @db.Date
+
+  globalRegion GlobalRegion @relation(fields: [globalRegionId], references: [id])
+}

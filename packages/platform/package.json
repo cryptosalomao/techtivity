@@ -1,0 +1,48 @@
+{
+  "name": "@growinco/platform",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">= 18.15",
+    "npm": ">= 9.5"
+  },
+  "scripts": {
+    "dev": "next dev -p 8000",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/server": "^11.10.0",
+    "@growinco/service": "^0.1.0",
+    "@mantine/core": "^6.0.0",
+    "@mantine/next": "^6.0.2",
+    "@mantine/notifications": "^6.0.2",
+    "@mantine/nprogress": "^6.0.10",
+    "@prisma/client": "^4.13.0",
+    "@tabler/icons-react": "^2.11.0",
+    "dayjs": "^1.11.7",
+    "next": "13.4.1",
+    "nextjs-routes": "^2.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "18.14.6",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
+    "autoprefixer": "^10.4.14",
+    "eslint": "8.35.0",
+    "eslint-config-next": "13.2.3",
+    "prisma": "^4.11.0",
+    "typescript": "4.9.5"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": false,
+    "printWidth": 110
+  }
+}
