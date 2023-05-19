@@ -1,6 +1,7 @@
-import { Card, Flex, Stack, Tabs, Text, Title, rem } from "@mantine/core"
+import { Card, Flex, Stack, Tabs, Title, rem } from "@mantine/core"
 import { Organization } from "@prisma/client"
 import { IconFiles, IconMapPins } from "@tabler/icons-react"
+import CreationDateBadge from "./CreationDateBadge"
 import WebsiteLink from "./WebsiteLink"
 
 type Props = {
@@ -8,8 +9,6 @@ type Props = {
 }
 
 export function Organization({ organization }: Props) {
-  const convertDate = (date: Date) => new Date(date).toLocaleString()
-
   return (
     <Card withBorder shadow="sm" radius="md">
       <Card.Section withBorder p="md">
@@ -18,7 +17,7 @@ export function Organization({ organization }: Props) {
             <Title order={4}>{organization.name}</Title>
             <WebsiteLink website={organization.website} />
           </Flex>
-          <Text>{convertDate(organization.createdAt)}</Text>
+          <CreationDateBadge createdAt={organization.createdAt} />
         </Stack>
       </Card.Section>
       <Card.Section withBorder p="md">
