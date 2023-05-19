@@ -1,16 +1,26 @@
-import { Organization } from "@/components/Organization"
+import { Organization } from "@/components/organization/Organization"
 import { prisma } from "@growinco/service"
 import { Group, SimpleGrid, Space, Title } from "@mantine/core"
-import { Organization as OrganizationType } from "@prisma/client"
+import { Organization as OrganizationType, Project } from "@prisma/client"
 import Head from "next/head"
+
+type MappedOrganizationProjects = OrganizationType & {
+  companies: {
+    projects: Project[]
+  }[]
+}
 
 type Props = Awaited<ReturnType<typeof getServerSideProps>>["props"]
 
 export async function getServerSideProps() {
   const organizations = await prisma.organization.findMany({
-    include: {
+    select: {
+      id: true,
+      name: true,
+      website: true,
+      createdAt: true,
       companies: {
-        include: {
+        select: {
           projects: true,
         },
       },
@@ -37,7 +47,7 @@ export default function Page({ organizations }: Props) {
       </Group>
       <Space h="md" />
       <SimpleGrid cols={3}>
-        {organizations.map((organization: OrganizationType) => (
+        {organizations.map((organization: MappedOrganizationProjects) => (
           <Organization key={organization.id} organization={organization} />
         ))}
       </SimpleGrid>

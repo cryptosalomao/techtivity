@@ -1,14 +1,28 @@
 import { Card, Flex, Stack, Tabs, Title, rem } from "@mantine/core"
-import { Organization } from "@prisma/client"
+import { Organization, Project } from "@prisma/client"
 import { IconFiles, IconMapPins } from "@tabler/icons-react"
-import CreationDateBadge from "./CreationDateBadge"
-import WebsiteLink from "./WebsiteLink"
+import CreationDateBadge from "../CreationDateBadge"
+import WebsiteLink from "../WebsiteLink"
+import Projects from "./Projects"
 
-type Props = {
-  organization: Organization
+type MappedOrganizationProjects = Organization & {
+  companies: {
+    projects: Project[]
+  }[]
 }
 
+type Props = {
+  organization: MappedOrganizationProjects
+}
+
+const flattenProjects = (organization: MappedOrganizationProjects) => ({
+  ...organization,
+  projects: organization.companies.flatMap((company) => company.projects),
+})
+
 export function Organization({ organization }: Props) {
+  const flattenedProjects = flattenProjects(organization)
+
   return (
     <Card withBorder shadow="sm" radius="md">
       <Card.Section withBorder p="md">
@@ -34,7 +48,7 @@ export function Organization({ organization }: Props) {
             Reach
           </Tabs.Panel>
           <Tabs.Panel value="projects" pt="sm">
-            Projects
+            <Projects projects={flattenedProjects.projects} />
           </Tabs.Panel>
         </Tabs>
       </Card.Section>
