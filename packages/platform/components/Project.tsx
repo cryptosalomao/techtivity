@@ -1,5 +1,6 @@
 import { Card, Flex, Group, Stack, Text, Title } from "@mantine/core"
 import { Organization } from "@prisma/client"
+import WebsiteLink from "./WebsiteLink"
 
 type Props = {
   title: string
@@ -22,7 +23,7 @@ export function Project({ title, createdAt, organization }: Props) {
         <Group>
           <Flex align="center" gap="md">
             <Title order={5}>{organization.name}</Title>
-            <Text>{organization.website}</Text>
+            <WebsiteLink website={organization.website} />
           </Flex>
           <Text>{convertDate(organization.createdAt)}</Text>
         </Group>

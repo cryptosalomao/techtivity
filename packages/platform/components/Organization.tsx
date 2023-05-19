@@ -1,6 +1,7 @@
 import { Card, Flex, Stack, Tabs, Text, Title, rem } from "@mantine/core"
 import { Organization } from "@prisma/client"
 import { IconFiles, IconMapPins } from "@tabler/icons-react"
+import WebsiteLink from "./WebsiteLink"
 
 type Props = {
   organization: Organization
@@ -15,7 +16,7 @@ export function Organization({ organization }: Props) {
         <Stack>
           <Flex align="center" gap="md">
             <Title order={4}>{organization.name}</Title>
-            <Text>{organization.website}</Text>
+            <WebsiteLink website={organization.website} />
           </Flex>
           <Text>{convertDate(organization.createdAt)}</Text>
         </Stack>
