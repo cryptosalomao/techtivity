@@ -1,11 +1,20 @@
+import { Project } from "@/components/Project"
 import { prisma } from "@growinco/service"
-import { Group, Space, Title } from "@mantine/core"
+import { Group, SimpleGrid, Space, Title } from "@mantine/core"
 import Head from "next/head"
 
 type Props = Awaited<ReturnType<typeof getServerSideProps>>["props"]
 
 export async function getServerSideProps() {
-  const projects = await prisma.project.findMany()
+  const projects = await prisma.project.findMany({
+    include: {
+      company: {
+        include: {
+          organization: true,
+        },
+      },
+    },
+  })
 
   return {
     props: {
@@ -13,6 +22,16 @@ export async function getServerSideProps() {
     },
   }
 }
+
+const renderProjects = (projects: Props["projects"]) =>
+  projects.map((project: any) => (
+    <Project
+      key={project.id}
+      title={project.title}
+      createdAt={project.createdAt}
+      organization={project.company.organization}
+    />
+  ))
 
 export default function Page({ projects }: Props) {
   return (
@@ -29,7 +48,7 @@ export default function Page({ projects }: Props) {
 
       <Space h="md" />
 
-      {JSON.stringify(projects)}
+      <SimpleGrid cols={3}>{renderProjects(projects)}</SimpleGrid>
     </>
   )
 }
