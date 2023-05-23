@@ -1,5 +1,5 @@
 import { Organization } from "@/components/organization/Organization"
-import { prisma } from "@growinco/service"
+import { fetchOrganizations } from "@/services/database"
 import { Group, SimpleGrid, Space, Title } from "@mantine/core"
 import { Organization as OrganizationType, Project } from "@prisma/client"
 import Head from "next/head"
@@ -13,19 +13,7 @@ type MappedOrganizationProjects = OrganizationType & {
 type Props = Awaited<ReturnType<typeof getServerSideProps>>["props"]
 
 export async function getServerSideProps() {
-  const organizations = await prisma.organization.findMany({
-    select: {
-      id: true,
-      name: true,
-      website: true,
-      createdAt: true,
-      companies: {
-        select: {
-          projects: true,
-        },
-      },
-    },
-  })
+  const organizations = await fetchOrganizations()
 
   return {
     props: {

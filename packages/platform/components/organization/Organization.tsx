@@ -4,11 +4,14 @@ import { IconFiles, IconMapPins } from "@tabler/icons-react"
 import CreationDateBadge from "../CreationDateBadge"
 import WebsiteLink from "../WebsiteLink"
 import Projects from "./Projects"
+import { Reach } from "./Reach"
 
 type MappedOrganizationProjects = Organization & {
   companies: {
+    countryIds?: string[]
     projects: Project[]
   }[]
+  regions: []
 }
 
 type Props = {
@@ -45,7 +48,7 @@ export function Organization({ organization }: Props) {
             </Tabs.Tab>
           </Tabs.List>
           <Tabs.Panel value="reach" pt="sm">
-            Reach
+            <Reach regions={organization.regions} />
           </Tabs.Panel>
           <Tabs.Panel value="projects" pt="sm">
             <Projects projects={flattenedProjects.projects} />
