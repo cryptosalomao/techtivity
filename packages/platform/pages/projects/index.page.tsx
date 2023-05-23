@@ -1,20 +1,12 @@
 import { Project } from "@/components/Project"
-import { prisma } from "@growinco/service"
+import { fetchProjects } from "@/services/database"
 import { Group, SimpleGrid, Space, Title } from "@mantine/core"
 import Head from "next/head"
 
 type Props = Awaited<ReturnType<typeof getServerSideProps>>["props"]
 
 export async function getServerSideProps() {
-  const projects = await prisma.project.findMany({
-    include: {
-      company: {
-        include: {
-          organization: true,
-        },
-      },
-    },
-  })
+  const projects = await fetchProjects()
 
   return {
     props: {
