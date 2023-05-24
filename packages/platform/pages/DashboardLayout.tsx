@@ -9,7 +9,7 @@ import {
   UnstyledButton,
 } from "@mantine/core"
 import { Notifications } from "@mantine/notifications"
-import { IconRocket } from "@tabler/icons-react"
+import { IconBuildingCommunity, IconRocket } from "@tabler/icons-react"
 import Link, { LinkProps } from "next/link"
 import React from "react"
 import { RouterTransition } from "./RouterTransition"
@@ -25,6 +25,7 @@ export function DashboardLayout({ children }: any) {
             </Title>
             <Navbar.Section grow mt="xs">
               <NavLink href="/projects" label="Projects" icon={IconRocket} />
+              <NavLink href="/organizations" label="Organizations" icon={IconBuildingCommunity} />
             </Navbar.Section>
           </Navbar>
         }
