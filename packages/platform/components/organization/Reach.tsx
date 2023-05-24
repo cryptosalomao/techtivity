@@ -1,9 +1,5 @@
+import { Region } from "@/types"
 import { Stack, Text, Title } from "@mantine/core"
-
-type Region = {
-  name: string
-  countries: string[]
-}
 
 type Props = {
   regions: Region[]

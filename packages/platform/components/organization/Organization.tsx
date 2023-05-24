@@ -1,24 +1,16 @@
+import { MappedOrganization } from "@/types"
 import { Card, Flex, Stack, Tabs, Title, rem } from "@mantine/core"
-import { Organization, Project } from "@prisma/client"
 import { IconFiles, IconMapPins } from "@tabler/icons-react"
 import CreationDateBadge from "../CreationDateBadge"
 import WebsiteLink from "../WebsiteLink"
 import Projects from "./Projects"
 import { Reach } from "./Reach"
 
-type MappedOrganizationProjects = Organization & {
-  companies: {
-    countryIds?: string[]
-    projects: Project[]
-  }[]
-  regions: []
-}
-
 type Props = {
-  organization: MappedOrganizationProjects
+  organization: MappedOrganization
 }
 
-const flattenProjects = (organization: MappedOrganizationProjects) => ({
+const flattenProjects = (organization: MappedOrganization) => ({
   ...organization,
   projects: organization.companies.flatMap((company) => company.projects),
 })

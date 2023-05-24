@@ -1,3 +1,4 @@
+import { Region } from "@/types"
 import { prisma } from "@growinco/service"
 
 export const fetchProjects = async () => {
@@ -15,6 +16,12 @@ export const fetchProjects = async () => {
 }
 
 export const fetchOrganizations = async () => {
+  const organizations = await prisma.organization.findMany()
+
+  return organizations
+}
+
+export const fetchOrganizationsWithRegions = async () => {
   const organizations = await prisma.organization.findMany({
     include: {
       companies: {
@@ -33,7 +40,7 @@ export const fetchOrganizations = async () => {
   const organizationsWithRegions = []
 
   for (const organization of organizations) {
-    const regions: any = []
+    const regions: Region[] = []
 
     for (const company of organization.companies) {
       const countryIds = company.countryIds || []
@@ -47,7 +54,7 @@ export const fetchOrganizations = async () => {
         if (country) {
           const region = country.globalRegion.name
 
-          const existingRegion = regions.find((r: any) => r.name === region)
+          const existingRegion = regions.find((r: Region) => r.name === region)
 
           if (existingRegion) {
             existingRegion.countries.push(country.name)
